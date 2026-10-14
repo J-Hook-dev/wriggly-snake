@@ -165,6 +165,10 @@ P.hitBarrier=function(){this.barrierT=this.now};
 P.stamp=function(html,cls,life,style){
   const el=this.o.stamps;if(!el)return;const d=document.createElement('div');d.className='stamp '+(cls||'');d.innerHTML=html;
   d.style.cssText='--life:'+(life||1.7)+'s;'+(style||'');el.appendChild(d);setTimeout(()=>d.remove(),((life||1.7)+.7)*1000);
+  /* keep every stamp inside the screen: wrap long ones (CSS), and slide edge-pinned ones back in */
+  const fit=()=>{const W=el.clientWidth,w=d.offsetWidth,c=d.offsetLeft,m=14;if(!W||!w)return;
+    if(w>=W-2*m)d.style.left=W/2+'px';else if(c-w/2<m)d.style.left=(m+w/2)+'px';else if(c+w/2>W-m)d.style.left=(W-m-w/2)+'px'};
+  fit();requestAnimationFrame(fit);
 };
 P.hud=function(html){const el=this.o.hud;if(!el)return;if(html){el.innerHTML=html;el.classList.add('on')}else el.classList.remove('on')};
 P.mid=function(a,b){return this.tiles[a].base.clone().add(this.tiles[b].base).multiplyScalar(.5)};
@@ -518,5 +522,5 @@ function F_bars(c,t0){[0,1,2,3,4,5].forEach(i=>at(c,t0+i*.22,F=>{F.bars[i].th=F.
   SCENES.push({cues:c});
 })();
 
-window.WSFilm={Film,STEPS,SCENES,countHand,face};
+window.WSFilm={Film,STEPS,SCENES,TIMING,countHand,face};
 })();

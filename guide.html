@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <script>/* if a newer version is published, reload onto it (browsers may cache this page for 10 minutes) */
-(function(){var B='1792016147';try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
+(function(){var B='1792016437';try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
 if(j.build!==B){var k='ws-reload-'+j.build;if(!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');location.replace(location.pathname+'?b='+j.build+location.hash)}}}).catch(function(){})}catch(e){}})();</script>
 </head>
 <body>
@@ -192,7 +192,7 @@ section.teaching::before{content:""; position:absolute; left:-14px; top:2.6rem; 
 .theater canvas{display:block; width:100%; height:100%}
 .theater-on .dock{z-index:95}
 .th-stamps{position:absolute; inset:0; pointer-events:none; overflow:hidden}
-.stamp{position:absolute; left:50%; top:var(--y,11%); translate:-50% 0; text-align:center; white-space:nowrap; font:800 clamp(2rem,7vw,4.4rem)/.95 var(--f-display); letter-spacing:-.02em; color:#f4efe2; text-shadow:0 6px 28px rgba(0,0,0,.45);
+.stamp{position:absolute; left:50%; top:var(--y,11%); translate:-50% 0; text-align:center; white-space:normal; width:max-content; max-width:calc(100% - 28px); text-wrap:balance; font:800 clamp(2rem,7vw,4.4rem)/.95 var(--f-display); letter-spacing:-.02em; color:#f4efe2; text-shadow:0 6px 28px rgba(0,0,0,.45);
   animation:stampin .45s cubic-bezier(.2,1.7,.4,1) both, stampout .45s ease-in forwards; animation-delay:0s, var(--life)}
 .stamp small{display:block; font:700 clamp(.7rem,1.8vw,.95rem)/1.2 var(--f-mono); letter-spacing:.16em; text-transform:uppercase; margin-top:.55em; opacity:.85}
 .stamp.big{font-size:clamp(5rem,20vw,11rem); --y:5%}
@@ -395,7 +395,7 @@ footer{padding-block:2rem 3rem; border-top:1px solid var(--line); font-size:.9re
 <audio id="bgm" src="audio/music.mp3" loop preload="none"></audio>
 <audio id="vo" preload="none"></audio>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="film.js?v=10"></script>
+<script src="film.js?v=11"></script>
 
 <script>
 (function(){
