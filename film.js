@@ -73,11 +73,12 @@ function Film(o){
   F.barrier.position.set(0,1.8,-1.9);sc.add(F.barrier);
   const ivory=new T.MeshStandardMaterial({color:0xf2ead4,roughness:.42}),green=new T.MeshStandardMaterial({color:0x1f6b55,roughness:.38});
   const frontG=new T.BoxGeometry(TW,TH,FD),backG=new T.BoxGeometry(TW*.985,TH*.985,BD);
-  F.tiles=[];
+  F.tiles=[];F.meshes=[];F.ray=new T.Raycaster();
   for(let i=0;i<20;i++){
     const mat=new T.MeshStandardMaterial({map:face('m1',r),roughness:.32,emissive:new T.Color(0xffb83d),emissiveIntensity:0});
     const g=new T.Group(),fm=new T.Mesh(frontG,[ivory,ivory,ivory,ivory,mat,ivory]),bm=new T.Mesh(backG,green);
     bm.position.z=-(FD+BD)/2;[fm,bm].forEach(m=>{m.castShadow=true;m.receiveShadow=true});g.add(fm,bm);sc.add(g);
+    fm.userData.i=bm.userData.i=i;F.meshes.push(fm,bm);
     F.tiles.push({g,mat,k:'m1',p:new T.Vector3(0,-30,0),tp:new T.Vector3(0,-30,0),base:new T.Vector3(),ry:0,try:0,rx:0,trx:0,glow:0,tglow:0,dim:0,tdim:0,
       spin:false,sa:0,sp:7,hopT:-9,hopH:.55,spinT:-9,arcT:-9,arcH:2,pulseT:-9,shakeT:-9,snake:false});
   }
@@ -168,6 +169,13 @@ P.play=function(i,getT){
   const S=SCENES[i];F.cues=S.cues.slice().sort((a,b)=>a[0]-b[0]);if(S.setup)S.setup(F);
 };
 P.stop=function(){this.active=false};
+/* free play: no script, just a running clock so hops, spins and throws still animate */
+P.free=function(){const F=this;F.reset();F.cues=[];F.fired=0;F.active=true;const t0=performance.now();F.getT=()=>(performance.now()-t0)/1000;F.view({pitch:.5,zoom:1.05,yaw:0})};
+/* which tile is under a screen point, or -1 */
+P.pick=function(cx,cy){
+  const r=this.o.canvas.getBoundingClientRect(),v=new T.Vector2(((cx-r.left)/r.width)*2-1,-((cy-r.top)/r.height)*2+1);
+  this.ray.setFromCamera(v,this.cam);const hit=this.ray.intersectObjects(this.meshes,false)[0];return hit?hit.object.userData.i:-1;
+};
 P.loop=function(now){
   const F=this;requestAnimationFrame(t=>F.loop(t));
   const dt=Math.min(.1,(now-F.last)/1000);F.last=now;

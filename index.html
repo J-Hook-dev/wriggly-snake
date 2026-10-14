@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#082d24">
-<meta name="description" content="Tap once and watch: a narrated 3D lesson on the Wriggly Snake mahjong limit hand, in ten short scenes.">
+<meta name="description" content="Tap once and watch: a narrated 3D lesson on the Wriggly Snake mahjong limit hand, then play it yourself.">
 <meta property="og:title" content="Wriggly Snake: a 2½ minute mahjong lesson">
-<meta property="og:description" content="Tap once and watch: a narrated 3D lesson on the Wriggly Snake mahjong limit hand, in ten short scenes.">
+<meta property="og:description" content="Tap once and watch: a narrated 3D lesson on the Wriggly Snake mahjong limit hand, then play it yourself.">
 <meta property="og:type" content="website">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -83,6 +83,22 @@ body{background:var(--felt-2); color:var(--ink); font:400 16px/1.5 var(--f-body)
 .recap li{display:grid; grid-template-columns:1.8rem 1fr; gap:.6rem; align-items:baseline; font-size:1rem}
 .recap b{font:800 1rem/1 var(--f-display); color:var(--gold)}
 .credit{font:500 11px/1.4 var(--f-mono); color:var(--muted); max-width:30ch}
+/* your turn */
+.choices{display:grid; gap:.7rem; width:min(22rem,100%)}
+.go.alt{background:transparent; color:var(--ink); box-shadow:inset 0 0 0 2px var(--ink); animation:none}
+.stage.playing .top,.stage.playing .subs{display:none}
+.play{position:absolute; inset:0; pointer-events:none}
+.ptop{position:absolute; top:calc(env(safe-area-inset-top, 0px) + 12px); left:14px; right:14px; display:flex; align-items:center; gap:12px}
+.ptop span{font:700 12px/1.2 var(--f-mono); letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.chip{pointer-events:auto; font:700 12px/1 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; padding:.6rem .95rem; border-radius:999px; border:1px solid rgba(244,239,226,.35); background:rgba(0,0,0,.25); color:var(--ink); cursor:pointer}
+.pbot{position:absolute; left:0; right:0; bottom:0; padding:44px 18px calc(env(safe-area-inset-bottom, 0px) + 18px); background:linear-gradient(transparent, rgba(4,22,17,.86) 32%); display:grid; gap:.55rem; justify-items:center; text-align:center}
+.pbot p{margin:0; max-width:34rem}
+#pPrompt{font:600 clamp(1.02rem,4.4vw,1.3rem)/1.4 var(--f-body)}
+#pFb{font-size:1rem; line-height:1.45; min-height:1.45em; color:var(--muted)} #pFb.ok{color:var(--ok)} #pFb.bad{color:var(--bad)}
+.pbtns{display:flex; gap:.6rem; margin-top:.2rem}
+.pbtn{pointer-events:auto; font:800 1rem/1 var(--f-display); padding:.85rem 1.4rem; border-radius:999px; border:1px solid rgba(244,239,226,.4); background:transparent; color:var(--ink); cursor:pointer}
+.pbtn.primary{background:var(--ink); color:var(--felt-2); border-color:var(--ink)}
+.chip:focus-visible,.pbtn:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
 @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
 </style>
 
@@ -99,6 +115,10 @@ body{background:var(--felt-2); color:var(--ink); font:400 16px/1.5 var(--f-body)
     </div>
   </div>
   <div class="subs"><p id="subs" aria-live="off"></p></div>
+  <div class="play" id="play" hidden>
+    <div class="ptop"><button class="chip" id="menuBtn" type="button">Menu</button><span id="pTitle"></span></div>
+    <div class="pbot"><p id="pPrompt"></p><p id="pFb"></p><div class="pbtns"><button class="pbtn" id="pHint" type="button">Hint</button><button class="pbtn primary" id="pNext" type="button" hidden>Next</button></div></div>
+  </div>
   <div class="paused" id="paused" hidden><div><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>Tap to keep watching</div></div>
 </div>
 
@@ -113,14 +133,17 @@ body{background:var(--felt-2); color:var(--ink); font:400 16px/1.5 var(--f-body)
 
 <div class="card gone" id="end" role="dialog" aria-labelledby="endTitle" hidden>
   <span class="eyebrow">Lesson complete</span>
-  <h1 id="endTitle">Go get it</h1>
+  <h1 id="endTitle">Your turn</h1>
   <ol class="recap">
     <li><b>1</b><span>Count on the deal: 13 − needed tiles held − 1 for a pair.</span></li>
     <li><b>2</b><span>Chase it at 4 steps or fewer. At 5, only with a half-flush backup.</span></li>
     <li><b>3</b><span>Throw other suits, then dragons, then extra copies.</span></li>
     <li><b>4</b><span>All four of a needed tile gone? Switch to the half flush.</span></li>
   </ol>
-  <button class="go" id="replayBtn" type="button">Watch again</button>
+  <div class="choices">
+    <button class="go" id="puzBtn" type="button">Solve 3 puzzles</button>
+    <button class="go alt" id="trainBtn" type="button">Play the snake trainer</button>
+  </div>
   <a href="guide.html" style="color:var(--gold); font:700 13px/1.4 var(--f-mono); letter-spacing:.08em; text-transform:uppercase">Open the full written guide</a>
 </div>
 
@@ -164,7 +187,7 @@ function startStep(i){
 vo.addEventListener('playing',()=>{started=true});
 vo.addEventListener('ended',()=>{setTimeout(()=>{if(!paused&&STEPS[cur]&&vo.ended)startStep(cur+1)},900)});
 function finish(){
-  ended=true;paused=true;vo.pause();if(film)film.stop();barFills.forEach(b=>b.style.width='100%');
+  mode='menu';ended=true;paused=true;vo.pause();if(film)film.stop();barFills.forEach(b=>b.style.width='100%');
   bgm.volume=.3;const e=$('end');e.hidden=false;requestAnimationFrame(()=>e.classList.remove('gone'));releaseWake();
 }
 function pause(){if(paused||ended)return;paused=true;vo.pause();bgm.pause();$('paused').hidden=false;releaseWake()}
@@ -196,12 +219,127 @@ function begin(){
   getWake();startStep(0);
 }
 $('intro').addEventListener('click',begin);
-$('replayBtn').addEventListener('click',e=>{e.stopPropagation();const end=$('end');end.classList.add('gone');setTimeout(()=>{end.hidden=true},650);paused=false;ended=false;bgm.play().catch(()=>{});getWake();startStep(0)});
-$('stage').addEventListener('click',e=>{if(e.target.closest('.iconbtn'))return;if(paused)resume();else pause()});
+$('stage').addEventListener('click',e=>{if(mode!=='lesson'||e.target.closest('.iconbtn,.play'))return;if(paused)resume();else pause()});
 $('nextBtn').addEventListener('click',e=>{e.stopPropagation();if(ended)return;startStep(cur+1)});
 $('prevBtn').addEventListener('click',e=>{e.stopPropagation();if(ended)return;startStep(t>2.5?cur:cur-1)});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();else if(wake===null&&!paused)getWake()});
-document.addEventListener('keydown',e=>{if(e.key===' '&&cur>=0&&!ended){e.preventDefault();paused?resume():pause()}if(e.key==='ArrowRight'&&cur>=0)startStep(cur+1)});
+document.addEventListener('keydown',e=>{if(mode!=='lesson')return;if(e.key===' '&&cur>=0&&!ended){e.preventDefault();paused?resume():pause()}if(e.key==='ArrowRight'&&cur>=0)startStep(cur+1)});
+
+
+/* ---------- your turn: 3D puzzles and the snake trainer ---------- */
+const ORDER=[];['m','p','s'].forEach(s=>{for(let n=1;n<=9;n++)ORDER.push(s+n)});ORDER.push('E','S','W','N','R','G','H');
+const rank=k=>ORDER.indexOf(k),sortKeys=ks=>ks.slice().sort((a,b)=>rank(a)-rank(b));
+const WINDS=['E','S','W','N'],needOf=s=>[1,2,3,4,5,6,7,8,9].map(n=>s+n).concat(WINDS),count=keys=>WSFilm.countHand(keys);
+const SUITN={m:'Characters',p:'Dots',s:'Bamboo'};
+const NAME=k=>({E:'East Wind',S:'South Wind',W:'West Wind',N:'North Wind',R:'Red Dragon',G:'Green Dragon',H:'White Dragon'})[k]||(k[1]+' of '+SUITN[k[0]]);
+function bestDiscard(keys){
+  const c={};keys.forEach(k=>c[k]=(c[k]||0)+1);
+  const opts=[...new Set(keys)].map(k=>{const rest=keys.slice();rest.splice(rest.indexOf(k),1);const r=count(rest),need=needOf(r.s);
+    return {k,steps:r.steps,sc:!need.includes(k)?(['R','G','H'].includes(k)?1:0):(c[k]>=2?2:9)}});
+  opts.sort((a,b)=>a.steps-b.steps||a.sc-b.sc);return opts[0].k;
+}
+let mode='lesson';
+const pPrompt=$('pPrompt'),pFb=$('pFb'),pNext=$('pNext'),pHint=$('pHint'),pTitle=$('pTitle');
+function enterPlay(m){
+  const end=$('end');end.classList.add('gone');setTimeout(()=>{end.hidden=true},650);
+  mode=m;paused=false;$('stage').classList.add('playing');$('play').hidden=false;$('paused').hidden=true;
+  bgm.volume=.18;if(bgm.paused)bgm.play().catch(()=>{});
+  if(!film)return;
+  if(m==='puzzle')startPuzzle(0);else startTrainer();
+}
+function toMenu(){
+  mode='menu';$('play').hidden=true;$('stage').classList.remove('playing');if(film){film.hud('');film.stop()}
+  const e=$('end');e.hidden=false;requestAnimationFrame(()=>e.classList.remove('gone'));
+}
+function say(prompt,fb,cls){pPrompt.textContent=prompt;pFb.textContent=fb||'';pFb.className=cls||''}
+
+/* puzzles */
+const PUZ=[
+ {hand:'m1 m2 m3 m5 m5 m7 m8 m9 E S N R p4',draw:'G',ans:['p4'],
+  prompt:'Characters is your suit. You just drew the Green Dragon (glowing). Tap the tile you would throw.',
+  fb:{p4:'Right. The 4 of Dots helps neither the snake nor the half-flush backup, so it goes first.',R:'Not yet. A dragon still fits the half-flush backup. One tile here helps neither plan.',G:'Not yet. A dragon still fits the half-flush backup. One tile here helps neither plan.',m5:'That breaks your pair, which costs a step.'}},
+ {hand:'m1 m2 m3 m4 m5 m6 m7 m8 m9 E S W p7',draw:'N',ans:['p7'],
+  prompt:'You are one step away and just drew the North Wind. Tap the tile you would throw.',
+  fb:{p7:'Right. Now all thirteen needed tiles are singles, so any of thirteen kinds wins: up to 39 live tiles.',N:'That throws away the tile you needed. You stay one step away.'}},
+ {hand:'m1 m2 m3 m4 m5 m6 m7 m8 m8 E E N N',draw:'m9',ans:['m8'],pile:['S','S','S'],
+  prompt:'Three South Winds are already gone (the red tiles) and you hold none. Tap the tile you would throw.',
+  fb:{m8:'Right. The snake is nearly dead, so switch: 123 456 789 plus East and North pairs is ready for a half flush with a straight.',E:'That breaks a pair you need for the half flush.',N:'That breaks a pair you need for the half flush.',m9:'The 9 completes your 1 to 9 straight. Keep it.'}}
+];
+const GENERIC='That is one of your needed tiles. Breaking it costs a full draw. Look for the tile that helps neither plan.';
+let pz=0,pState='',pKeys=[],tries=0;
+function startPuzzle(n){
+  pz=n;tries=0;const P=PUZ[n];pKeys=P.hand.split(' ').concat(P.draw);
+  film.free();film.deal(pKeys,[13,1],'rain');film.tiles[13].tglow=.8;
+  (P.pile||[]).forEach((k,j)=>{const i=14+j,o=film.tiles[i],p=film.pile(j);film.key(i,k);o.p.set(p.x,7,p.z-4);o.tp.copy(p);o.rx=-1;o.trx=film.pileFlat()?-Math.PI/2:0;o.ry=0;o.try=0;o.sp=5;o.mat.emissive.set(0xff4a3d);o.tglow=.6;o.g.position.copy(o.p)});
+  pTitle.textContent='Puzzle '+(n+1)+' of '+PUZ.length;say(P.prompt);pNext.hidden=true;pHint.hidden=false;pState='await';
+}
+function puzzleTap(i){
+  if(pState!=='await'||i<0||i>13)return;const P=PUZ[pz],k=pKeys[i],t=film.tiles[i];
+  if(P.ans.includes(k)){
+    pState='done';t.mat.emissive.set(0x5cf08f);t.tglow=1;
+    film.burst(t.base.clone().add(new THREE.Vector3(0,1,0)),0x7ee2a8);film.flashNow();sfx('right');film.stamp('✓','big',1);
+    film.throwTo(i,film.pile(P.pile?P.pile.length:0),film.pileFlat());film.relayout([...Array(14).keys()].filter(x=>x!==i),[13]);
+    say(P.prompt,P.fb[k],'ok');pNext.hidden=false;pHint.hidden=true;pNext.textContent=pz<PUZ.length-1?'Next puzzle':'Done';
+  }else{
+    tries++;film.shakeTile(i);t.mat.emissive.set(0xff4a3d);film.pulse(i);sfx('wrong');setTimeout(()=>t.mat.emissive.set(0xffb83d),900);
+    say(P.prompt,P.fb[k]||GENERIC,'bad');if(tries>=2)pKeys.forEach((kk,j)=>{if(P.ans.includes(kk))film.pulse(j)});
+  }
+}
+
+/* snake trainer: deal, draw, throw, and watch the count */
+const MAXT=20;let wall=[],hand=[],drawn=-1,pile=[],turn=0,tState='';
+const keysOf=idx=>idx.map(i=>film.tiles[i].k);
+function freshWall(){const w=[];ORDER.forEach(k=>{for(let n=0;n<4;n++)w.push(k)});for(let i=w.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[w[i],w[j]]=[w[j],w[i]]}return w}
+function freeIdx(){for(let i=0;i<20;i++)if(!hand.includes(i)&&i!==drawn&&!pile.includes(i))return i;return -1}
+function startTrainer(){
+  let keys,n=0;do{wall=freshWall();keys=wall.splice(0,13);n++}while(count(keys).steps>4&&n<500);
+  film.free();film.deal(sortKeys(keys),[13],'rain');hand=[...Array(13).keys()];drawn=-1;pile=[];turn=0;tState='busy';
+  pTitle.textContent='Snake trainer';pNext.hidden=true;pHint.hidden=false;
+  say('Here is a hand worth chasing. Each turn you draw a tile, then tap one to throw away.','Practice wall: the tiles you need turn up a little more often than in a real game.');
+  updateTrainer();setTimeout(drawTile,1600);
+}
+function updateTrainer(){
+  const r=count(keysOf(hand)),need=needOf(r.s);
+  hand.forEach(i=>{const t=film.tiles[i],ok=need.includes(t.k);t.tglow=ok?.3:0;t.tdim=ok?0:.45});
+  film.hud('<b>'+(r.steps<=0?'Ready':r.steps+' step'+(r.steps===1?'':'s'))+'</b><span>'+SUITN[r.s]+' · '+r.have.length+' of 13 held'+(r.pair?' · pair':'')+'</span>');
+}
+function drawTile(){
+  if(mode!=='trainer')return;
+  if(turn>=MAXT){tState='over';say('The wall ran out after '+MAXT+' draws. That happens a lot with this hand.','Deal again and see if you can finish faster.');pNext.hidden=false;pNext.textContent='Deal a new hand';pHint.hidden=true;return}
+  const held=keysOf(hand),r=count(held),missing=needOf(r.s).filter(k=>!held.includes(k)&&wall.includes(k));
+  let k;if(missing.length&&Math.random()<.35){k=missing[Math.floor(Math.random()*missing.length)];wall.splice(wall.indexOf(k),1)}else k=wall.pop();
+  turn++;const i=freeIdx();drawn=i;film.key(i,k);
+  const slots=film.layout([13,1]);hand.forEach((h,j)=>{const t=film.tiles[h];t.base.copy(slots[j]);t.tp.copy(slots[j])});
+  const t=film.tiles[i];t.base.copy(slots[13]);t.p.set(slots[13].x+3,6,slots[13].z-6);t.tp.copy(slots[13]);
+  Object.assign(t,{ry:0,try:0,rx:0,trx:0,sp:5,tglow:1,tdim:0,snake:false});t.mat.emissive.set(0xffb83d);t.g.position.copy(t.p);sfx('place');
+  if(count(held.concat(k)).steps===-1)return win();
+  tState='await';say('Turn '+turn+' of '+MAXT+'. You drew the '+NAME(k)+'. Tap a tile to throw it away.');
+}
+function trainerTap(i){
+  if(tState!=='await'||(i!==drawn&&!hand.includes(i)))return;
+  tState='busy';const keep=hand.concat(drawn).filter(x=>x!==i);
+  const t=film.tiles[i];t.tglow=0;t.tdim=0;
+  pile.push(i);if(pile.length>5){const o=film.tiles[pile.shift()];o.tp.y=-3;o.sp=3}
+  film.throwTo(i,film.pile(pile.length-1),film.pileFlat());pile.forEach((p,j)=>{if(p!==i)film.tiles[p].tp.copy(film.pile(j))});
+  hand=keep.sort((a,b)=>rank(film.tiles[a].k)-rank(film.tiles[b].k));drawn=-1;film.relayout(hand,[13]);updateTrainer();
+  pFb.textContent='';setTimeout(drawTile,750);
+}
+function win(){
+  tState='won';const all=hand.concat(drawn);
+  film.hud('<b>Wriggly Snake!</b><span>built in '+turn+' draws</span>');
+  all.forEach((i,j)=>{const t=film.tiles[i];t.tdim=0;t.tglow=1;setTimeout(()=>film.spinOnce(i),j*60)});
+  film.burst(new THREE.Vector3(0,1.6,.5),0xffd27a);film.flashNow();film.shake=.25;sfx('win');film.stamp('WRIGGLY<br>SNAKE!','title',2.4);
+  say('You built the Wriggly Snake in '+turn+' draws. That pays the limit.','','ok');pNext.hidden=false;pNext.textContent='Deal a new hand';pHint.hidden=true;
+}
+pHint.addEventListener('click',e=>{e.stopPropagation();
+  if(mode==='puzzle'&&pState==='await'){const P=PUZ[pz];pKeys.forEach((k,j)=>{if(P.ans.includes(k))film.pulse(j)});say(P.prompt,'Look for the tile that helps neither the snake nor the half-flush backup.','')}
+  if(mode==='trainer'&&tState==='await'){const all=hand.concat(drawn),k=bestDiscard(keysOf(all)),i=film.tiles[drawn].k===k?drawn:all.find(x=>film.tiles[x].k===k);film.pulse(i);film.hop(i,.5);film.stamp('TRY THIS','sm',1);pFb.textContent='Throw the '+NAME(k)+'.';pFb.className=''}
+});
+pNext.addEventListener('click',e=>{e.stopPropagation();if(mode==='puzzle'){if(pz<PUZ.length-1)startPuzzle(pz+1);else toMenu()}else if(mode==='trainer')startTrainer()});
+$('menuBtn').addEventListener('click',e=>{e.stopPropagation();toMenu()});
+$('puzBtn').addEventListener('click',e=>{e.stopPropagation();enterPlay('puzzle')});
+$('trainBtn').addEventListener('click',e=>{e.stopPropagation();enterPlay('trainer')});
+$('film').addEventListener('click',e=>{if(mode!=='puzzle'&&mode!=='trainer')return;e.stopPropagation();const i=film.pick(e.clientX,e.clientY);if(mode==='puzzle')puzzleTap(i);else trainerTap(i)});
 
 /* build the film once fonts are in, so tile faces and labels draw with the right type */
 const fonts=document.fonts&&document.fonts.load?Promise.all([document.fonts.load('700 120px "Noto Serif SC"','一萬筒條東'),document.fonts.load('800 100px "Bricolage Grotesque"','PAIR')]):Promise.resolve();
