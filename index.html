@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#082d24">
+<meta name="description" content="Tap once and watch: Quentin teaches the Wriggly Snake limit hand in ten narrated 3D scenes.">
+<meta property="og:title" content="Wriggly Snake: a 2½ minute mahjong lesson">
+<meta property="og:description" content="Tap once and watch: Quentin teaches the Wriggly Snake limit hand in ten narrated 3D scenes.">
+<meta property="og:type" content="website">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Wriggly Snake Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&text=%E4%B8%80%E4%BA%8C%E4%B8%89%E5%9B%9B%E4%BA%94%E5%85%AD%E4%B8%83%E5%85%AB%E4%B9%9D%E8%90%AC%E7%AD%92%E6%A2%9D%E6%9D%B1%E5%8D%97%E8%A5%BF%E5%8C%97%E4%B8%AD%E7%99%BC&display=swap">
+<style>
+/* Layout: one full-screen felt table, like a vertical video. Story bars on top, the 3D film in the middle, big subtitles at the bottom. */
+:root{
+  --felt:#0e4d3e; --felt-2:#082d24; --ink:#f4efe2; --muted:#a9c9bc; --gold:#f6cf6b; --ok:#8af0b4; --bad:#ff7b6e; --red:#b3261e;
+  --tile:#f8f2e2; --tile-edge:#e2d8bd; --tile-back:#1f6b55;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --f-body:"Source Serif 4",Georgia,serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace; --f-cjk:"Noto Serif SC","Songti SC","SimSun",serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--felt-2); color:var(--ink); font:400 16px/1.5 var(--f-body); overflow:hidden; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none}
+.stage{position:fixed; inset:0; background:radial-gradient(130% 80% at 50% 30%, var(--felt), var(--felt-2))}
+.stage canvas{display:block; width:100%; height:100%}
+.top{position:absolute; left:0; right:0; top:0; padding:calc(env(safe-area-inset-top, 0px) + 10px) 14px 0; display:grid; gap:8px; pointer-events:none}
+.bars{display:flex; gap:4px}
+.bars i{flex:1; height:3px; border-radius:2px; background:rgba(244,239,226,.25); overflow:hidden}
+.bars i b{display:block; height:100%; width:0; background:var(--ink)}
+.toprow{display:flex; align-items:center; gap:10px}
+.who{display:flex; align-items:center; gap:8px; flex:1; min-width:0}
+.who .t{width:26px; height:35px; flex:none; border-radius:4px; background:linear-gradient(#fffdf7,var(--tile)); box-shadow:inset 0 0 0 1px var(--tile-edge),0 3px 0 var(--tile-back); display:grid; place-items:center; font:700 17px/1 var(--f-cjk); color:#1b1b18}
+.who span{font:700 12px/1.2 var(--f-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.iconbtn{pointer-events:auto; width:40px; height:40px; border-radius:50%; border:0; background:rgba(0,0,0,.22); color:var(--ink); display:grid; place-items:center; cursor:pointer}
+.iconbtn svg{width:16px; height:16px}
+.iconbtn:focus-visible,.go:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+.hud{position:absolute; left:16px; top:calc(env(safe-area-inset-top, 0px) + 74px); display:grid; gap:2px; opacity:0; transform:translateY(-6px); transition:opacity .35s, transform .35s; pointer-events:none; text-shadow:0 3px 18px rgba(0,0,0,.5)}
+.hud.on{opacity:1; transform:none}
+.hud b{font:800 clamp(1.7rem,8vw,2.6rem)/1 var(--f-display); letter-spacing:-.01em}
+.hud span{font:700 11px/1.3 var(--f-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+.stamps{position:absolute; inset:0; pointer-events:none; overflow:hidden}
+.stamp{position:absolute; left:50%; top:var(--y,24%); translate:-50% 0; text-align:center; white-space:nowrap; font:800 clamp(2rem,10.5vw,4.4rem)/.95 var(--f-display); letter-spacing:-.02em; color:var(--ink); text-shadow:0 6px 28px rgba(0,0,0,.5);
+  animation:stampin .45s cubic-bezier(.2,1.7,.4,1) both, stampout .45s ease-in forwards; animation-delay:0s, var(--life)}
+.stamp small{display:block; font:700 clamp(.66rem,3vw,.95rem)/1.2 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; margin-top:.55em; opacity:.85}
+.stamp.big{font-size:clamp(5rem,30vw,11rem); --y:16%}
+.stamp.title{font-size:clamp(3rem,15vw,6.5rem); --y:18%}
+.stamp.sm{font-size:clamp(1.4rem,7vw,2.6rem); --y:28%; letter-spacing:.05em}
+.stamp.ok{color:var(--ok)} .stamp.bad{color:var(--bad); font-size:clamp(1.4rem,7vw,2.6rem)} .stamp.warn{color:var(--gold)}
+@keyframes stampin{from{transform:scale(1.9) rotate(-5deg); opacity:0}to{transform:scale(1) rotate(-2deg); opacity:1}}
+@keyframes stampout{to{transform:scale(.92) rotate(-2deg); opacity:0}}
+.subs{position:absolute; left:0; right:0; bottom:0; padding:48px 18px calc(env(safe-area-inset-bottom, 0px) + 22px); background:linear-gradient(transparent, rgba(4,22,17,.82) 42%); pointer-events:none}
+.subs p{margin:0 auto; max-width:34rem; font:600 clamp(1.05rem,4.6vw,1.45rem)/1.42 var(--f-body); text-wrap:pretty; min-height:4.3em}
+.subs span{color:rgba(244,239,226,.42); transition:color .25s}
+.subs span.done{color:var(--ink)}
+.subs span.now{color:var(--ink); background:linear-gradient(transparent 64%, rgba(246,207,107,.38) 0)}
+.paused{position:absolute; inset:0; display:grid; place-items:center; background:rgba(4,22,17,.35); pointer-events:none}
+.paused div{display:grid; justify-items:center; gap:10px; font:700 12px/1 var(--f-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink)}
+.paused svg{width:64px; height:64px}
+/* intro and end cards */
+.card{position:fixed; inset:0; z-index:10; display:grid; place-content:center; justify-items:center; text-align:center; gap:1rem;
+  padding:calc(env(safe-area-inset-top, 0px) + 24px) 20px calc(env(safe-area-inset-bottom, 0px) + 24px);
+  background:radial-gradient(130% 90% at 50% 15%, var(--felt), var(--felt-2)); transition:opacity .6s, visibility .6s}
+.card.gone{opacity:0; visibility:hidden}
+.card .eyebrow{font:700 11px/1 var(--f-mono); letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
+.card h1{margin:0; font:800 clamp(3rem,16vw,6rem)/.95 var(--f-display); letter-spacing:-.03em; text-wrap:balance}
+.card p{margin:0; max-width:30ch; font-size:1.08rem; color:var(--ink)}
+.card .sound{display:inline-flex; gap:8px; align-items:center; font:700 12px/1 var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--gold)}
+.card .sound svg{width:16px; height:16px}
+.go{margin-top:.4rem; font:800 1.2rem/1 var(--f-display); padding:1.1rem 2.3rem; border-radius:999px; border:0; background:var(--ink); color:var(--felt-2); cursor:pointer; animation:ring 2s ease-out infinite}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(244,239,226,.5)}100%{box-shadow:0 0 0 24px rgba(244,239,226,0)}}
+.ctiles{display:flex; gap:8px; margin-bottom:.4rem}
+.ctiles span{width:44px; height:60px; border-radius:6px; background:linear-gradient(#fffdf7,var(--tile)); box-shadow:inset 0 0 0 1px var(--tile-edge),0 5px 0 var(--tile-back),0 9px 16px rgba(0,0,0,.35);
+  display:grid; place-items:center; align-content:center; font:700 19px/1.05 var(--f-cjk); color:#1b1b18; animation:bob 2.6s ease-in-out infinite; animation-delay:calc(var(--i) * .2s)}
+.ctiles span em{font-style:normal; color:var(--red)}
+@keyframes bob{50%{transform:translateY(-10px) rotate(-3deg)}}
+.recap{list-style:none; margin:.2rem 0 .4rem; padding:0; display:grid; gap:.45rem; text-align:left; max-width:22rem}
+.recap li{display:grid; grid-template-columns:1.8rem 1fr; gap:.6rem; align-items:baseline; font-size:1rem}
+.recap b{font:800 1rem/1 var(--f-display); color:var(--gold)}
+.credit{font:500 11px/1.4 var(--f-mono); color:var(--muted); max-width:30ch}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+</style>
+
+<div class="stage" id="stage">
+  <canvas id="film" role="img" aria-label="An animated 3D lesson about the Wriggly Snake mahjong hand"></canvas>
+  <div class="stamps" id="stamps"></div>
+  <div class="hud" id="hud"></div>
+  <div class="top">
+    <div class="bars" id="bars"></div>
+    <div class="toprow">
+      <div class="who"><span class="t">師</span><span id="stepName">Quentin · Welcome</span></div>
+      <button class="iconbtn" id="prevBtn" type="button" aria-label="Previous part"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13 2.5v11l-7-5.5zM3 2.5h2v11H3z"/></svg></button>
+      <button class="iconbtn" id="nextBtn" type="button" aria-label="Next part"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 2.5v11l7-5.5zM11 2.5h2v11h-2z"/></svg></button>
+    </div>
+  </div>
+  <div class="subs"><p id="subs" aria-live="off"></p></div>
+  <div class="paused" id="paused" hidden><div><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>Tap to keep watching</div></div>
+</div>
+
+<div class="card" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+  <div class="ctiles" aria-hidden="true"><span style="--i:0">一<em>萬</em></span><span style="--i:1">東</span><span style="--i:2">五<em>萬</em></span><span style="--i:3">北</span><span style="--i:4">九<em>萬</em></span></div>
+  <span class="eyebrow">A 2½ minute mahjong lesson</span>
+  <h1 id="introTitle">Wriggly Snake</h1>
+  <p>Your teacher Quentin shows you when to chase this limit hand, what to throw, and when to let it go.</p>
+  <span class="sound"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 6h3l4-3v10L5 10H2zM11 5.5a3.5 3.5 0 0 1 0 5l-.8-.8a2.4 2.4 0 0 0 0-3.4z"/></svg>Sound on</span>
+  <button class="go" id="goBtn" type="button">Tap to begin</button>
+</div>
+
+<div class="card gone" id="end" role="dialog" aria-labelledby="endTitle" hidden>
+  <span class="eyebrow">Lesson complete</span>
+  <h1 id="endTitle">Go get it</h1>
+  <ol class="recap">
+    <li><b>1</b><span>Count on the deal: 13 − needed tiles held − 1 for a pair.</span></li>
+    <li><b>2</b><span>Chase it at 4 steps or fewer. At 5, only with a half-flush backup.</span></li>
+    <li><b>3</b><span>Throw other suits, then dragons, then extra copies.</span></li>
+    <li><b>4</b><span>All four of a needed tile gone? Switch to the half flush.</span></li>
+  </ol>
+  <button class="go" id="replayBtn" type="button">Watch again</button>
+  <a href="guide.html" style="color:var(--gold); font:700 13px/1.4 var(--f-mono); letter-spacing:.08em; text-transform:uppercase">Open the full written guide</a>
+  <p class="credit">Voice and tile sounds made with ElevenLabs. Music made with Suno.</p>
+</div>
+
+<audio id="vo" preload="auto" playsinline></audio>
+<audio id="bgm" src="audio/music.mp3" preload="auto" loop playsinline></audio>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="film.js"></script>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const STEPS=window.WSFilm?WSFilm.STEPS:[];
+const vo=$('vo'),bgm=$('bgm'),subs=$('subs');
+let film=null,ctx=null,buffers={},cur=-1,t=0,started=false,timerMode=false,paused=true,ended=false,attemptAt=0,spans=[],marks=[],wake=null;
+
+/* tile sounds through Web Audio, which phones allow once the first tap has happened */
+const SFX={place:'audio/sfx-place.mp3',remove:'audio/sfx-remove.mp3',discard:'audio/sfx-discard.mp3',right:'audio/sfx-right.mp3',wrong:'audio/sfx-wrong.mp3',win:'audio/sfx-win.mp3'};
+const VOL={place:.5,remove:.4,discard:.65,right:.55,wrong:.45,win:.7};
+function loadSfx(){Object.entries(SFX).forEach(([n,u])=>fetch(u).then(r=>r.arrayBuffer()).then(b=>ctx.decodeAudioData(b)).then(buf=>{buffers[n]=buf}).catch(()=>{}))}
+function sfx(n){if(!ctx||!buffers[n]||paused)return;try{const s=ctx.createBufferSource(),g=ctx.createGain();g.gain.value=VOL[n]||.5;s.buffer=buffers[n];s.connect(g).connect(ctx.destination);s.start()}catch(e){}}
+
+/* story bars */
+$('bars').innerHTML=STEPS.map(()=>'<i><b></b></i>').join('');
+const barFills=[...document.querySelectorAll('#bars b')];
+
+function setSubs(text){
+  const parts=text.match(/[^.!?:]+[.!?:]+\s*/g)||[text];let acc=0;marks=[];
+  subs.innerHTML=parts.map(p=>{marks.push(acc);acc+=p.length;return '<span>'+p+'</span>'}).join('');marks.push(acc);spans=[...subs.children];
+}
+function startStep(i){
+  if(i>=STEPS.length){finish();return}
+  if(i<0)i=0;
+  cur=i;t=0;started=false;timerMode=false;attemptAt=performance.now();
+  const S=STEPS[i];$('stepName').textContent='Quentin · '+(i+1)+' of '+STEPS.length+' · '+S.name;
+  barFills.forEach((b,k)=>{b.style.width=k<i?'100%':'0%'});
+  setSubs(S.text);
+  vo.src=S.vo;vo.currentTime=0;
+  if(!paused)vo.play().catch(()=>{});
+  bgm.volume=.08;
+  if(film)film.play(i,()=>t);
+}
+vo.addEventListener('playing',()=>{started=true});
+vo.addEventListener('ended',()=>{setTimeout(()=>{if(!paused&&STEPS[cur]&&vo.ended)startStep(cur+1)},900)});
+function finish(){
+  ended=true;paused=true;vo.pause();if(film)film.stop();barFills.forEach(b=>b.style.width='100%');
+  bgm.volume=.3;const e=$('end');e.hidden=false;requestAnimationFrame(()=>e.classList.remove('gone'));releaseWake();
+}
+function pause(){if(paused||ended)return;paused=true;vo.pause();bgm.pause();$('paused').hidden=false;releaseWake()}
+function resume(){if(!paused||ended)return;paused=false;$('paused').hidden=true;if(!started||t<STEPS[cur].dur)vo.play().catch(()=>{});bgm.play().catch(()=>{});getWake()}
+async function getWake(){try{if('wakeLock' in navigator&&!wake){wake=await navigator.wakeLock.request('screen');wake.addEventListener('release',()=>{wake=null})}}catch(e){}}
+function releaseWake(){try{if(wake)wake.release()}catch(e){}wake=null}
+
+let last=performance.now();
+function tick(now){
+  const dt=Math.min(.1,(now-last)/1000);last=now;
+  if(!paused&&cur>=0&&!ended){
+    const S=STEPS[cur];
+    if(started&&!timerMode){if(!vo.paused)t=vo.currentTime}
+    else if(timerMode){t+=dt;if(t>=S.dur+.9)startStep(cur+1)}
+    else if(now-attemptAt>3500){timerMode=true;started=true}
+    const f=Math.min(1,t/S.dur),pos=f*marks[marks.length-1];
+    barFills[cur].style.width=(f*100).toFixed(1)+'%';
+    spans.forEach((s,k)=>{s.className=pos>=marks[k+1]?'done':(pos>=marks[k]?'now':'')});
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+function begin(){
+  try{ctx=new (window.AudioContext||window.webkitAudioContext)();ctx.resume();loadSfx()}catch(e){}
+  bgm.volume=.08;bgm.play().catch(()=>{});
+  paused=false;ended=false;
+  const intro=$('intro');intro.classList.add('gone');setTimeout(()=>{intro.hidden=true},650);
+  getWake();startStep(0);
+}
+$('intro').addEventListener('click',begin);
+$('replayBtn').addEventListener('click',e=>{e.stopPropagation();const end=$('end');end.classList.add('gone');setTimeout(()=>{end.hidden=true},650);paused=false;ended=false;bgm.play().catch(()=>{});getWake();startStep(0)});
+$('stage').addEventListener('click',e=>{if(e.target.closest('.iconbtn'))return;if(paused)resume();else pause()});
+$('nextBtn').addEventListener('click',e=>{e.stopPropagation();if(ended)return;startStep(cur+1)});
+$('prevBtn').addEventListener('click',e=>{e.stopPropagation();if(ended)return;startStep(t>2.5?cur:cur-1)});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();else if(wake===null&&!paused)getWake()});
+document.addEventListener('keydown',e=>{if(e.key===' '&&cur>=0&&!ended){e.preventDefault();paused?resume():pause()}if(e.key==='ArrowRight'&&cur>=0)startStep(cur+1)});
+
+/* build the film once fonts are in, so tile faces and labels draw with the right type */
+const fonts=document.fonts&&document.fonts.load?Promise.all([document.fonts.load('700 120px "Noto Serif SC"','一萬筒條東'),document.fonts.load('800 100px "Bricolage Grotesque"','PAIR')]):Promise.resolve();
+Promise.race([fonts,new Promise(r=>setTimeout(r,2500))]).then(()=>{
+  try{film=new WSFilm.Film({canvas:$('film'),stamps:$('stamps'),hud:$('hud'),sfx});if(cur>=0)film.play(cur,()=>t)}
+  catch(e){$('film').hidden=true}
+});
+try{$('goBtn').focus({preventScroll:true})}catch(e){}
+})();
+</script>
+
+</body>
+</html>
