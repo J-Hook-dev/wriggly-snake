@@ -27,8 +27,10 @@ header b{font:800 18px/1.2 var(--f-display)} #sum.ok{color:var(--ok)} #sum.bad{c
 .stamp.sm{font-size:clamp(1.4rem,7vw,2.6rem); --y:28%; letter-spacing:.05em}
 .stamp.joke{--y:50%; font-size:clamp(1.6rem,8vw,3.2rem); rotate:-5deg}
 .stamp.ok{color:var(--ok)} .stamp.bad{color:var(--bad); font-size:clamp(1.4rem,7vw,2.6rem)} .stamp.warn{color:var(--gold)}
-@keyframes stampin{from{transform:scale(1.9) rotate(-5deg); opacity:0}to{transform:scale(1) rotate(-2deg); opacity:1}}
+@keyframes stampin{from{transform:scale(1.4) rotate(-5deg); opacity:0}to{transform:scale(1) rotate(-2deg); opacity:1}}
 @keyframes stampout{to{transform:scale(.92) rotate(-2deg); opacity:0}}
+/* check page: show and measure each stamp at rest, not mid-animation */
+.stamp{animation:none!important; transform:rotate(-2deg)}
 </style>
 </head>
 <body>
