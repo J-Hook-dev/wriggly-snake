@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#082d24">
-<meta name="description" content="Tap once and watch: Quentin teaches the Wriggly Snake limit hand in ten narrated 3D scenes.">
+<meta name="description" content="Tap once and watch: a narrated 3D lesson on the Wriggly Snake mahjong limit hand, in ten short scenes.">
 <meta property="og:title" content="Wriggly Snake: a 2½ minute mahjong lesson">
-<meta property="og:description" content="Tap once and watch: Quentin teaches the Wriggly Snake limit hand in ten narrated 3D scenes.">
+<meta property="og:description" content="Tap once and watch: a narrated 3D lesson on the Wriggly Snake mahjong limit hand, in ten short scenes.">
 <meta property="og:type" content="website">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -93,7 +93,7 @@ body{background:var(--felt-2); color:var(--ink); font:400 16px/1.5 var(--f-body)
   <div class="top">
     <div class="bars" id="bars"></div>
     <div class="toprow">
-      <div class="who"><span class="t">師</span><span id="stepName">Quentin · Welcome</span></div>
+      <div class="who"><span class="t">師</span><span id="stepName">1 of 10 · Welcome</span></div>
       <button class="iconbtn" id="prevBtn" type="button" aria-label="Previous part"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13 2.5v11l-7-5.5zM3 2.5h2v11H3z"/></svg></button>
       <button class="iconbtn" id="nextBtn" type="button" aria-label="Next part"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 2.5v11l7-5.5zM11 2.5h2v11h-2z"/></svg></button>
     </div>
@@ -106,7 +106,7 @@ body{background:var(--felt-2); color:var(--ink); font:400 16px/1.5 var(--f-body)
   <div class="ctiles" aria-hidden="true"><span style="--i:0">一<em>萬</em></span><span style="--i:1">東</span><span style="--i:2">五<em>萬</em></span><span style="--i:3">北</span><span style="--i:4">九<em>萬</em></span></div>
   <span class="eyebrow">A 2½ minute mahjong lesson</span>
   <h1 id="introTitle">Wriggly Snake</h1>
-  <p>Your teacher Quentin shows you when to chase this limit hand, what to throw, and when to let it go.</p>
+  <p>Your teacher shows you when to chase this limit hand, what to throw, and when to let it go.</p>
   <span class="sound"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 6h3l4-3v10L5 10H2zM11 5.5a3.5 3.5 0 0 1 0 5l-.8-.8a2.4 2.4 0 0 0 0-3.4z"/></svg>Sound on</span>
   <button class="go" id="goBtn" type="button">Tap to begin</button>
 </div>
@@ -122,7 +122,6 @@ body{background:var(--felt-2); color:var(--ink); font:400 16px/1.5 var(--f-body)
   </ol>
   <button class="go" id="replayBtn" type="button">Watch again</button>
   <a href="guide.html" style="color:var(--gold); font:700 13px/1.4 var(--f-mono); letter-spacing:.08em; text-transform:uppercase">Open the full written guide</a>
-  <p class="credit">Voice and tile sounds made with ElevenLabs. Music made with Suno.</p>
 </div>
 
 <audio id="vo" preload="auto" playsinline></audio>
@@ -154,7 +153,7 @@ function startStep(i){
   if(i>=STEPS.length){finish();return}
   if(i<0)i=0;
   cur=i;t=0;started=false;timerMode=false;attemptAt=performance.now();
-  const S=STEPS[i];$('stepName').textContent='Quentin · '+(i+1)+' of '+STEPS.length+' · '+S.name;
+  const S=STEPS[i];$('stepName').textContent=(i+1)+' of '+STEPS.length+' · '+S.name;
   barFills.forEach((b,k)=>{b.style.width=k<i?'100%':'0%'});
   setSubs(S.text);
   vo.src=S.vo;vo.currentTime=0;

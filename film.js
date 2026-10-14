@@ -1,5 +1,5 @@
 /* Wriggly Snake film: the 3D cinematic engine shared by the phone and PC editions.
-   Each step is a scene of cues keyed to the narration clock (times come from the pauses in Quentin's recordings). */
+   Each step is a scene of cues keyed to the narration clock (times come from the pauses in the narration recordings). */
 (function(){
 'use strict';
 const T=window.THREE;
