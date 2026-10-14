@@ -176,7 +176,7 @@ P.reset=function(){
 P.play=function(i,getT){
   const F=this;F.reset();F.step=i;F.getT=getT;F.fired=0;F.active=true;F.now=0;
   const S=SCENES[i],m=TIMING[i];
-  F.cues=S.cues.map(([t,f])=>[remap(m,t),f]).concat(m.jokes.map(([t,html,cls])=>/DARRIN/.test(html)?[t,G=>G.yardStart()]:[t,G=>{G.stamp(html,cls+' joke',2);G.shake=.12;G.sfx('discard');
+  F.cues=S.cues.map(([t,f])=>[remap(m,t),f]).concat(m.jokes.map(([t,html,cls])=>/DARRIN/.test(html)?[t,G=>G.yardStart(t)]:[t,G=>{G.stamp(html,cls+' joke',2);G.shake=.12;G.sfx('discard');
     G.tiles.forEach((o,k)=>{if(o.tp.y>0)G.hop(k,.22)})}])).sort((a,b)=>a[0]-b[0]);
   if(S.setup)S.setup(F);
 };
@@ -262,9 +262,9 @@ P.buildYard=function(){
   Y.ball=new T.Mesh(new T.SphereGeometry(.28,20,14),new T.MeshStandardMaterial({color:0xb8743d,roughness:.55}));
   Y.ball.scale.set(1.4,.82,.82);Y.ball.castShadow=true;g.add(Y.ball);
 };
-P.yardStart=function(){
+P.yardStart=function(t0){
   const F=this;if(!F.yard)F.buildYard();const Y=F.yard;
-  F.yardOn=true;F.yardT=F.now;Y.hit=false;Y.hole.visible=false;Y.group.visible=true;
+  F.yardOn=true;F.yardT=t0==null?F.now:t0;Y.hit=false;Y.hole.visible=false;Y.group.visible=true;
   F.tiles.forEach(o=>{o.g.visible=false});
   F.view({yaw:.28,pitch:.36,zoom:F.port?1.7:.95});F.tlook.set(0,1.2,-1.4);F.sfx('place');
 };
