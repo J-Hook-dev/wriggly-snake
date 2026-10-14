@@ -23,7 +23,7 @@ const STEPS=[
 ];
 
 /* Fin's narration: per teaching line [oldStart, oldEnd, newStart, newEnd] so each cue lands on the same words, plus timed jokes */
-const TIMING=[{"name": "intro", "file": "intro", "dur": 26.51, "oldDur": 16.59, "text": "Welcome to the Wriggly Snake, ya gobshite. It's a limit hand: nine tiles of one suit, one of each wind, and one tile doubled. To everyone else at the table, it looks like a hand going nowhere. A bit like yourself, really. That's the beauty of it. I'll show you when to chase it, what to throw away, and when to walk away. Now sit up straight and pay attention, ya eejit.", "segs": [[0, 2.04, 0.0, 3.21], [2.04, 3.22, 3.21, 4.44], [3.22, 7.6, 4.44, 10.37], [7.6, 11.38, 10.37, 14.51], [11.38, 12.99, 16.57, 18.13], [12.99, 16.59, 18.13, 23.23]], "jokes": [[14.66, "A BIT LIKE<br>YOURSELF", "warn"], [23.38, "SIT UP,<br>EEJIT", "bad"]]}, {"name": "hand", "file": "hand", "dur": 46.29, "oldDur": 30.2, "text": "Here's the shape. One through nine in a single suit, one copy each. East, South, West and North, one each. That's thirteen different tiles. Count them on your fingers if you have to, I won't tell anyone. The fourteenth tile doubles any one of them, and that's your pair. You can't call pung, chow or kong along the way, so the whole hand comes from your own draws, though most tables let you take the very last tile from a discard. So no, you can't nick tiles off your granny either. One warning: rule cards disagree about which tile can be the pair. Settle that before you play. Or there'll be a row, and you'll lose it, ya muppet.", "segs": [[0, 1.4, 0.0, 1.31], [1.4, 4.87, 1.31, 4.98], [4.87, 9.13, 4.98, 7.84], [9.13, 11.5, 7.84, 10.25], [11.5, 15.34, 15.39, 19.91], [15.34, 24.62, 19.91, 31.53], [24.62, 25.77, 35.97, 37.21], [25.77, 28.93, 37.21, 40.36], [28.93, 30.2, 40.36, 42.48]], "jokes": [[10.4, "USE YOUR<br>FINGERS", "warn"], [31.68, "HANDS OFF<br>GRANNY'S TILES", "bad"], [42.63, "YA MUPPET", "bad"]]}, {"name": "count", "file": "count", "dur": 29.31, "oldDur": 20.51, "text": "How far away are you? From being any good at this? Miles. Because the snake is all singles, counting is easy. Even for you. Pick your best suit. Count the different tiles you need that you're already holding. Here, that's ten. You also have a pair of fives, so take off one more. Thirteen, minus ten, minus one: you're two draws from ready. And the dragons? Dead weight. Get fecked, dragons.", "segs": [[0, 1.62, 0.0, 1.64], [1.62, 4.43, 4.94, 9.76], [4.43, 5.86, 11.39, 10.87], [5.86, 8.76, 10.87, 14.52], [8.76, 10.42, 14.52, 19.17], [10.42, 13.68, 19.17, 22.76], [13.68, 16.68, 22.76, 24.84], [16.68, 18.62, 24.84, 26.61], [18.62, 19.98, 26.61, 27.62], [19.98, 20.51, 27.62, 27.81]], "jokes": [[1.79, "MILES", "bad"], [9.91, "EVEN FOR YOU", "warn"], [27.96, "GET FECKED,<br>DRAGONS", "bad"]]}, {"name": "commit", "file": "commit", "dur": 33.23, "oldDur": 18.91, "text": "So, should you chase it? Decide on the deal. Four steps or fewer: go for it. Five: only if the same tiles also point to a half flush. Six or more: play a normal hand. Don't be a hero. You're not that good. That's about three deals in four, so most of the time, the answer is no. I know. Life's hard. Get over it. Patience is part of this hand. Something you clearly know nothing about.", "segs": [[0, 2.51, 0.0, 2.42], [2.51, 3.73, 2.42, 5.54], [3.73, 5.13, 5.54, 7.0], [5.13, 6.95, 7.0, 8.0], [6.95, 7.87, 8.0, 7.16], [7.87, 11.07, 7.16, 12.21], [11.07, 12.11, 12.21, 13.5], [12.11, 13.82, 13.5, 14.41], [13.82, 17.53, 19.92, 25.12], [17.53, 18.91, 28.85, 29.69]], "jokes": [[14.56, "DON'T BE<br>A HERO", "bad"], [25.27, "GET OVER IT", "warn"], [29.84, "CLEARLY", "bad"]]}, {"name": "discards", "file": "discards-v2", "dur": 37.8, "oldDur": 19.64, "text": "When you do go for it, throw tiles in this order. First, number tiles from the other two suits. They help nothing. Away with ye, four of Dots. Second, dragons. Let them go early, before they get dangerous. Dragons are like your uncle at a wedding. Grand early on, a menace by midnight. Third, extra copies. You only need one pair. And never, ever break one of your needed singles, like Darrin breaking through the fecking wall of Nan's house. Do that and I'll come round and slap the tiles out of your hand myself.", "segs": [[0, 3.66, 0.0, 3.25], [3.66, 6.54, 3.25, 6.4], [6.54, 8.19, 6.4, 10.85], [8.19, 9.8, 12.79, 11.77], [9.8, 13.05, 11.77, 16.08], [13.05, 15.0, 22.27, 23.11], [15.0, 16.71, 23.11, 24.34], [16.71, 19.64, 24.34, 33.95]], "jokes": [[11.0, "AWAY WITH YE", "bad"], [16.23, "LIKE YOUR<br>UNCLE", "warn"], [28.38, "LIKE DARRIN<br>THROUGH NAN'S WALL", "bad"], [34.1, "I'LL COME<br>ROUND", "bad"]]}, {"name": "fold", "file": "fold", "dur": 29.81, "oldDur": 17.55, "text": "Now watch the table. Every tile has four copies. One South goes by. Then two. Then three. When all four are gone, the snake is dead. Dead as a doornail. Stop crying. Switch plans that same turn. Don't just sit there like a lemon. And remember: your discards tell everyone you're building one suit, so expect to win on your own draw. They're not as thick as you look.", "segs": [[0, 1.49, 0.0, 1.65], [1.49, 3.48, 1.65, 4.81], [3.48, 5.04, 4.81, 6.57], [5.04, 6.15, 6.57, 7.67], [6.15, 7.48, 7.67, 9.06], [7.48, 10.05, 9.06, 10.83], [10.05, 12.28, 13.52, 14.44], [12.28, 13.15, 20.16, 19.87], [13.15, 17.55, 19.87, 28.27]], "jokes": [[10.98, "STOP CRYING", "bad"], [14.59, "LIKE A<br>LEMON", "warn"], [28.42, "NOT AS THICK<br>AS YOU", "bad"]]}, {"name": "backup", "file": "backup", "dur": 22.83, "oldDur": 14.21, "text": "Here's your safety net. God knows you need one. Look at that one-to-nine run again. It's really three chows. Add a pung of East and a pair of North, and you've got a half flush with a pure straight. When the snake dies, slide into this hand. You lose almost nothing. Which is about what you'd have won anyway, ya chancer.", "segs": [[0, 1.8, 0.0, 1.71], [1.8, 3.82, 3.84, 7.98], [3.82, 5.63, 7.98, 7.75], [5.63, 10.68, 7.75, 15.0], [10.68, 13.11, 15.0, 17.21], [13.11, 14.21, 17.21, 19.93]], "jokes": [[1.86, "YOU NEED ONE", "warn"], [20.08, "YA CHANCER", "bad"]]}, {"name": "quick", "file": "quick", "dur": 20.19, "oldDur": 13.56, "text": "Let's practice counting. Fingers out, eejit. Here's a deal. Find your best suit, count the needed tiles, check for a pair, and you have your number. Here's another. And one more. With a little practice, you'll count a hand in seconds. Well. Maybe minutes, in your case.", "segs": [[0, 1.86, 0.0, 3.24], [1.86, 2.92, 4.36, 4.5], [2.92, 8.83, 4.5, 10.97], [8.83, 10.18, 10.97, 13.04], [10.18, 11.46, 13.04, 13.44], [11.46, 13.56, 13.44, 17.47]], "jokes": [[3.39, "FINGERS OUT", "warn"], [17.62, "MINUTES,<br>FOR YOU", "bad"]]}, {"name": "practice", "file": "practice", "dur": 25.16, "oldDur": 11.89, "text": "Try this one. Characters is your suit, and you've just drawn the Green Dragon. What do you throw? Take your time. No, actually, don't. The four of Dots. Get fecked, four of Dots. It helps neither the snake nor your backup plan. The dragons can wait a turn. There. You got one right. Mark the calendar.", "segs": [[0, 1.47, 0.0, 1.47], [1.47, 4.98, 1.47, 6.02], [4.98, 6.21, 6.02, 7.94], [6.21, 7.77, 12.95, 15.25], [7.77, 10.5, 14.96, 18.68], [10.5, 11.89, 18.68, 21.77]], "jokes": [[8.09, "HURRY UP", "warn"], [15.4, "GET FECKED", "bad"], [21.92, "MARK THE<br>CALENDAR", "ok"]]}, {"name": "finale", "file": "finale", "dur": 13.79, "oldDur": 8.83, "text": "That's the Wriggly Snake. Count on the deal, commit only when it's close, throw in the right order, and know when to let it go. See you at the table. Now get fecked, ya gobshite. Go on. Off with ye.", "segs": [[0, 1.79, 0.0, 1.92], [1.79, 7.9, 1.92, 8.65], [7.9, 8.83, 8.65, 10.45]], "jokes": [[10.6, "NOW GET<br>FECKED", "bad"]]}];
+const TIMING=[{"name": "intro", "file": "intro", "dur": 26.51, "oldDur": 16.59, "text": "Welcome to the Wriggly Snake, ya gobshite. It's a limit hand: nine tiles of one suit, one of each wind, and one tile doubled. To everyone else at the table, it looks like a hand going nowhere. A bit like yourself, really. That's the beauty of it. I'll show you when to chase it, what to throw away, and when to walk away. Now sit up straight and pay attention, ya eejit.", "segs": [[0, 2.04, 0.0, 3.21], [2.04, 3.22, 3.21, 4.44], [3.22, 7.6, 4.44, 10.37], [7.6, 11.38, 10.37, 14.51], [11.38, 12.99, 16.57, 18.13], [12.99, 16.59, 18.13, 23.23]], "jokes": [[14.66, "A BIT LIKE<br>YOURSELF", "warn"], [23.38, "SIT UP,<br>EEJIT", "bad"]]}, {"name": "hand", "file": "hand", "dur": 46.29, "oldDur": 30.2, "text": "Here's the shape. One through nine in a single suit, one copy each. East, South, West and North, one each. That's thirteen different tiles. Count them on your fingers if you have to, I won't tell anyone. The fourteenth tile doubles any one of them, and that's your pair. You can't call pung, chow or kong along the way, so the whole hand comes from your own draws, though most tables let you take the very last tile from a discard. So no, you can't nick tiles off your granny either. One warning: rule cards disagree about which tile can be the pair. Settle that before you play. Or there'll be a row, and you'll lose it, ya muppet.", "segs": [[0, 1.4, 0.0, 1.31], [1.4, 4.87, 1.31, 4.98], [4.87, 9.13, 4.98, 7.84], [9.13, 11.5, 7.84, 10.25], [11.5, 15.34, 15.39, 19.91], [15.34, 24.62, 19.91, 31.53], [24.62, 25.77, 35.97, 37.21], [25.77, 28.93, 37.21, 40.36], [28.93, 30.2, 40.36, 42.48]], "jokes": [[10.4, "USE YOUR<br>FINGERS", "warn"], [31.68, "HANDS OFF<br>GRANNY'S TILES", "bad"], [42.63, "YA MUPPET", "bad"]]}, {"name": "count", "file": "count", "dur": 29.31, "oldDur": 20.51, "text": "How far away are you? From being any good at this? Miles. Because the snake is all singles, counting is easy. Even for you. Pick your best suit. Count the different tiles you need that you're already holding. Here, that's ten. You also have a pair of fives, so take off one more. Thirteen, minus ten, minus one: you're two draws from ready. And the dragons? Dead weight. Get fecked, dragons.", "segs": [[0, 1.62, 0.0, 1.64], [1.62, 4.43, 4.94, 9.76], [4.43, 5.86, 11.39, 10.87], [5.86, 8.76, 10.87, 14.52], [8.76, 10.42, 14.52, 19.17], [10.42, 13.68, 19.17, 22.76], [13.68, 16.68, 22.76, 24.84], [16.68, 18.62, 24.84, 26.61], [18.62, 19.98, 26.61, 27.62], [19.98, 20.51, 27.62, 27.81]], "jokes": [[1.79, "MILES", "bad"], [9.91, "EVEN FOR YOU", "warn"], [27.96, "GET FECKED,<br>DRAGONS", "bad"]]}, {"name": "commit", "file": "commit", "dur": 33.23, "oldDur": 18.91, "text": "So, should you chase it? Decide on the deal. Four steps or fewer: go for it. Five: only if the same tiles also point to a half flush. Six or more: play a normal hand. Don't be a hero. You're not that good. That's about three deals in four, so most of the time, the answer is no. I know. Life's hard. Get over it. Patience is part of this hand. Something you clearly know nothing about.", "segs": [[0, 2.51, 0.0, 2.42], [2.51, 3.73, 2.42, 5.54], [3.73, 5.13, 5.54, 7.0], [5.13, 6.95, 7.0, 8.0], [6.95, 7.87, 8.0, 7.16], [7.87, 11.07, 7.16, 12.21], [11.07, 12.11, 12.21, 13.5], [12.11, 13.82, 13.5, 14.41], [13.82, 17.53, 19.92, 25.12], [17.53, 18.91, 28.85, 29.69]], "jokes": [[14.56, "DON'T BE<br>A HERO", "bad"], [25.27, "GET OVER IT", "warn"], [29.84, "CLEARLY", "bad"]]}, {"name": "discards", "file": "discards-v2", "dur": 37.8, "oldDur": 19.64, "text": "When you do go for it, throw tiles in this order. First, number tiles from the other two suits. They help nothing. Away with ye, four of Dots. Second, dragons. Let them go early, before they get dangerous. Dragons are like your uncle at a wedding. Grand early on, a menace by midnight. Third, extra copies. You only need one pair. And never, ever break one of your needed singles, like Darrin breaking through the fecking wall of Nan's house. Do that and I'll come round and slap the tiles out of your hand myself.", "segs": [[0, 3.66, 0.0, 3.25], [3.66, 6.54, 3.25, 6.4], [6.54, 8.19, 6.4, 10.85], [8.19, 9.8, 12.79, 11.77], [9.8, 13.05, 11.77, 16.08], [13.05, 15.0, 22.27, 23.11], [15.0, 16.71, 23.11, 24.34], [16.71, 19.64, 24.34, 33.95]], "jokes": [[11.0, "AWAY WITH YE", "bad"], [16.23, "LIKE YOUR<br>UNCLE", "warn"], [27.1, "LIKE DARRIN<br>THROUGH NAN'S WALL", "bad"], [34.1, "I'LL COME<br>ROUND", "bad"]]}, {"name": "fold", "file": "fold", "dur": 29.81, "oldDur": 17.55, "text": "Now watch the table. Every tile has four copies. One South goes by. Then two. Then three. When all four are gone, the snake is dead. Dead as a doornail. Stop crying. Switch plans that same turn. Don't just sit there like a lemon. And remember: your discards tell everyone you're building one suit, so expect to win on your own draw. They're not as thick as you look.", "segs": [[0, 1.49, 0.0, 1.65], [1.49, 3.48, 1.65, 4.81], [3.48, 5.04, 4.81, 6.57], [5.04, 6.15, 6.57, 7.67], [6.15, 7.48, 7.67, 9.06], [7.48, 10.05, 9.06, 10.83], [10.05, 12.28, 13.52, 14.44], [12.28, 13.15, 20.16, 19.87], [13.15, 17.55, 19.87, 28.27]], "jokes": [[10.98, "STOP CRYING", "bad"], [14.59, "LIKE A<br>LEMON", "warn"], [28.42, "NOT AS THICK<br>AS YOU", "bad"]]}, {"name": "backup", "file": "backup", "dur": 22.83, "oldDur": 14.21, "text": "Here's your safety net. God knows you need one. Look at that one-to-nine run again. It's really three chows. Add a pung of East and a pair of North, and you've got a half flush with a pure straight. When the snake dies, slide into this hand. You lose almost nothing. Which is about what you'd have won anyway, ya chancer.", "segs": [[0, 1.8, 0.0, 1.71], [1.8, 3.82, 3.84, 7.98], [3.82, 5.63, 7.98, 7.75], [5.63, 10.68, 7.75, 15.0], [10.68, 13.11, 15.0, 17.21], [13.11, 14.21, 17.21, 19.93]], "jokes": [[1.86, "YOU NEED ONE", "warn"], [20.08, "YA CHANCER", "bad"]]}, {"name": "quick", "file": "quick", "dur": 20.19, "oldDur": 13.56, "text": "Let's practice counting. Fingers out, eejit. Here's a deal. Find your best suit, count the needed tiles, check for a pair, and you have your number. Here's another. And one more. With a little practice, you'll count a hand in seconds. Well. Maybe minutes, in your case.", "segs": [[0, 1.86, 0.0, 3.24], [1.86, 2.92, 4.36, 4.5], [2.92, 8.83, 4.5, 10.97], [8.83, 10.18, 10.97, 13.04], [10.18, 11.46, 13.04, 13.44], [11.46, 13.56, 13.44, 17.47]], "jokes": [[3.39, "FINGERS OUT", "warn"], [17.62, "MINUTES,<br>FOR YOU", "bad"]]}, {"name": "practice", "file": "practice", "dur": 25.16, "oldDur": 11.89, "text": "Try this one. Characters is your suit, and you've just drawn the Green Dragon. What do you throw? Take your time. No, actually, don't. The four of Dots. Get fecked, four of Dots. It helps neither the snake nor your backup plan. The dragons can wait a turn. There. You got one right. Mark the calendar.", "segs": [[0, 1.47, 0.0, 1.47], [1.47, 4.98, 1.47, 6.02], [4.98, 6.21, 6.02, 7.94], [6.21, 7.77, 12.95, 15.25], [7.77, 10.5, 14.96, 18.68], [10.5, 11.89, 18.68, 21.77]], "jokes": [[8.09, "HURRY UP", "warn"], [15.4, "GET FECKED", "bad"], [21.92, "MARK THE<br>CALENDAR", "ok"]]}, {"name": "finale", "file": "finale", "dur": 13.79, "oldDur": 8.83, "text": "That's the Wriggly Snake. Count on the deal, commit only when it's close, throw in the right order, and know when to let it go. See you at the table. Now get fecked, ya gobshite. Go on. Off with ye.", "segs": [[0, 1.79, 0.0, 1.92], [1.79, 7.9, 1.92, 8.65], [7.9, 8.83, 8.65, 10.45]], "jokes": [[10.6, "NOW GET<br>FECKED", "bad"]]}];
 TIMING.forEach((m,i)=>{STEPS[i].text=m.text;STEPS[i].dur=m.dur;STEPS[i].vo='audio/fin-'+m.file+'.mp3'});
 function remap(m,t){
   const g=m.segs;if(t<=g[0][0])return t;
@@ -81,7 +81,7 @@ function Film(o){
   F.barrier=new T.Mesh(new T.PlaneGeometry(24,3.6),new T.MeshBasicMaterial({color:0xff4a3d,transparent:true,opacity:0,depthWrite:false,side:T.DoubleSide}));
   F.barrier.position.set(0,1.8,-1.9);sc.add(F.barrier);
   const ivory=new T.MeshStandardMaterial({color:0xf2ead4,roughness:.42}),green=new T.MeshStandardMaterial({color:0x1f6b55,roughness:.38});
-  const frontG=new T.BoxGeometry(TW,TH,FD),backG=new T.BoxGeometry(TW*.985,TH*.985,BD);
+  const frontG=new T.BoxGeometry(TW,TH,FD),backG=new T.BoxGeometry(TW*.985,TH*.985,BD);F.geo={frontG,backG,ivory,green};
   F.tiles=[];F.meshes=[];F.ray=new T.Raycaster();
   for(let i=0;i<20;i++){
     const mat=new T.MeshStandardMaterial({map:face('m1',r),roughness:.32,emissive:new T.Color(0xffb83d),emissiveIntensity:0});
@@ -168,7 +168,7 @@ P.stamp=function(html,cls,life,style){
 P.hud=function(html){const el=this.o.hud;if(!el)return;if(html){el.innerHTML=html;el.classList.add('on')}else el.classList.remove('on')};
 P.mid=function(a,b){return this.tiles[a].base.clone().add(this.tiles[b].base).multiplyScalar(.5)};
 P.reset=function(){
-  const F=this;F.hideAll();F.barGroup.visible=false;F.bars.forEach(b=>{b.h=b.th=.01;b.glow=b.tglow=0});
+  const F=this;if(F.yardOn)F.yardEnd();F.hideAll();F.barGroup.visible=false;F.bars.forEach(b=>{b.h=b.th=.01;b.glow=b.tglow=0});
   F.look.set(0,.7,0);F.tlook.set(0,.7,0);F.tsnakeA=0;F.snakeA=0;F.shake=0;F.flashT=F.barrierT=F.sparkT=-99;
   if(F.o.stamps)F.o.stamps.innerHTML='';F.hud('');
   F.tiles.forEach(t=>{t.mat.emissive.set(0xffb83d);t.glow=t.tglow=0;t.dim=t.tdim=0;t.hopT=t.spinT=t.arcT=t.pulseT=t.shakeT=-99});
@@ -176,9 +176,8 @@ P.reset=function(){
 P.play=function(i,getT){
   const F=this;F.reset();F.step=i;F.getT=getT;F.fired=0;F.active=true;F.now=0;
   const S=SCENES[i],m=TIMING[i];
-  F.cues=S.cues.map(([t,f])=>[remap(m,t),f]).concat(m.jokes.map(([t,html,cls])=>[t,G=>{G.stamp(html,cls+' joke',2);G.shake=.12;G.sfx('discard');
-    G.tiles.forEach((o,k)=>{if(o.tp.y>0)G.hop(k,.22)});
-    if(/DARRIN/.test(html)){G.hitBarrier();G.shake=.4;G.burst(new T.Vector3(0,1.6,-1.8),0xff8a6e)}}])).sort((a,b)=>a[0]-b[0]);
+  F.cues=S.cues.map(([t,f])=>[remap(m,t),f]).concat(m.jokes.map(([t,html,cls])=>/DARRIN/.test(html)?[t,G=>G.yardStart()]:[t,G=>{G.stamp(html,cls+' joke',2);G.shake=.12;G.sfx('discard');
+    G.tiles.forEach((o,k)=>{if(o.tp.y>0)G.hop(k,.22)})}])).sort((a,b)=>a[0]-b[0]);
   if(S.setup)S.setup(F);
 };
 P.stop=function(){this.active=false};
@@ -216,6 +215,7 @@ P.loop=function(now){
   if(F.barGroup.visible){const sp=F.port?1.3:1.75;F.bars.forEach((b,i)=>{b.h+=(b.th-b.h)*Math.min(1,dt*3.2);b.glow+=(b.tglow-b.glow)*Math.min(1,dt*5);
     const x=(i-2.5)*sp;b.mesh.scale.set(sp*.72,Math.max(.01,b.h),1);b.mesh.position.set(x,b.h/2,0);b.m.emissiveIntensity=b.glow*.55;
     b.lab.position.set(x,.32,1.05);b.val.position.set(x,b.h+.5,0);b.val.material.opacity=Math.min(1,Math.max(0,(b.h-.05)/Math.max(.1,b.full*.6)))})}
+  if(F.yardOn)F.yardTick(t);
   const k=Math.min(1,dt*2.2);
   F.v.yaw+=(F.tv.yaw-F.v.yaw)*k;F.v.pitch+=(F.tv.pitch-F.v.pitch)*k;F.v.zoom+=(F.tv.zoom-F.v.zoom)*k;F.look.lerp(F.tlook,k);
   const d=F.dist*F.v.zoom,cp=Math.cos(F.v.pitch);
@@ -227,6 +227,85 @@ P.loop=function(now){
   if(sl>0&&sl<=1.4){const p=F.pp,v=F.pv;for(let i=0;i<F.NP;i++){v[i*3+1]-=9.8*dt;p[i*3]+=v[i*3]*dt;p[i*3+1]=Math.max(.02,p[i*3+1]+v[i*3+1]*dt);p[i*3+2]+=v[i*3+2]*dt}
     F.pg.attributes.position.needsUpdate=true;F.pm.opacity=sl/1.4}else F.pm.opacity=0;
   F.r.render(F.sc,F.cam);
+};
+
+/* ---------- the backyard: Darrin, Glenn and Evan play touch footy, and Darrin goes through Nan's fibro wall ---------- */
+const Y_IMPACT=3.6,Y_END=6.6;
+P.buildYard=function(){
+  const F=this,Y=F.yard={},g=Y.group=new T.Group();g.visible=false;F.sc.add(g);
+  const grass=new T.Mesh(new T.PlaneGeometry(22,12),new T.MeshStandardMaterial({color:0x5c9a3c,roughness:.95}));
+  grass.rotation.x=-Math.PI/2;grass.position.set(0,.006,-.5);grass.receiveShadow=true;g.add(grass);
+  // the back of Nan's house: white fibro sheets with cover strips, a window and a gutter
+  const wall=Y.wall=new T.Group();wall.position.set(0,0,-4.1);g.add(wall);
+  const sheet=new T.Mesh(new T.BoxGeometry(18,4.3,.25),new T.MeshStandardMaterial({color:0xf4f3ee,roughness:.88}));
+  sheet.position.y=2.15;sheet.castShadow=true;sheet.receiveShadow=true;wall.add(sheet);
+  const strip=new T.MeshStandardMaterial({color:0xe3e2dc,roughness:.8});
+  for(let x=-9;x<=9.01;x+=1.2){const s=new T.Mesh(new T.BoxGeometry(.08,4.3,.06),strip);s.position.set(x,2.15,.15);s.receiveShadow=true;wall.add(s)}
+  const rail=new T.Mesh(new T.BoxGeometry(18,.08,.06),strip);rail.position.set(0,1.05,.15);wall.add(rail);
+  const gutter=new T.Mesh(new T.BoxGeometry(18.4,.24,.4),new T.MeshStandardMaterial({color:0x8a9096,roughness:.45,metalness:.2}));gutter.position.set(0,4.36,.12);wall.add(gutter);
+  const frame=new T.Mesh(new T.BoxGeometry(2.3,1.5,.08),new T.MeshStandardMaterial({color:0xffffff,roughness:.6}));frame.position.set(-4.4,2.7,.16);wall.add(frame);
+  const glass=new T.Mesh(new T.BoxGeometry(2.02,1.22,.1),new T.MeshStandardMaterial({color:0x6f8fa8,roughness:.15,metalness:.2}));glass.position.set(-4.4,2.7,.18);wall.add(glass);
+  const bar=new T.Mesh(new T.BoxGeometry(.06,1.22,.12),new T.MeshStandardMaterial({color:0xffffff}));bar.position.set(-4.4,2.7,.2);wall.add(bar);
+  // the hole Darrin leaves behind
+  const hs=new T.Shape(),pts=[];for(let i=0;i<16;i++){const a=i/16*Math.PI*2,r=.55+((i*37)%7)/14;pts.push([Math.cos(a)*r*1.05,Math.sin(a)*r*1.35])}
+  hs.moveTo(pts[0][0],pts[0][1]);pts.slice(1).forEach(p=>hs.lineTo(p[0],p[1]));
+  Y.hole=new T.Mesh(new T.ShapeGeometry(hs),new T.MeshBasicMaterial({color:0x17130f}));Y.hole.visible=false;wall.add(Y.hole);
+  // the lads: mahjong tiles with their names over their heads
+  const mk=(k,name,col)=>{
+    const mat=new T.MeshStandardMaterial({map:face(k,F.r),roughness:.32}),G=F.geo;
+    const t=new T.Group(),fm=new T.Mesh(G.frontG,[G.ivory,G.ivory,G.ivory,G.ivory,mat,G.ivory]),bm=new T.Mesh(G.backG,G.green);
+    bm.position.z=-(FD+BD)/2;fm.castShadow=bm.castShadow=true;t.add(fm,bm);g.add(t);
+    const lab=new T.Sprite(new T.SpriteMaterial({map:labelTex(name,col),transparent:true,depthWrite:false}));lab.scale.set(1.9,.6,1);g.add(lab);
+    return {t,lab};
+  };
+  Y.darrin=mk('R','Darrin','#ff5a4e');Y.glenn=mk('p8','Glenn','#5aa8ff');Y.evan=mk('S','Evan','#ffd23f');
+  Y.ball=new T.Mesh(new T.SphereGeometry(.28,20,14),new T.MeshStandardMaterial({color:0xb8743d,roughness:.55}));
+  Y.ball.scale.set(1.4,.82,.82);Y.ball.castShadow=true;g.add(Y.ball);
+};
+P.yardStart=function(){
+  const F=this;if(!F.yard)F.buildYard();const Y=F.yard;
+  F.yardOn=true;F.yardT=F.now;Y.hit=false;Y.hole.visible=false;Y.group.visible=true;
+  F.tiles.forEach(o=>{o.g.visible=false});
+  F.view({yaw:.28,pitch:.36,zoom:F.port?1.7:.95});F.tlook.set(0,1.2,-1.4);F.sfx('place');
+};
+P.yardEnd=function(){
+  const F=this;if(!F.yardOn)return;F.yardOn=false;
+  F.yard.group.visible=false;F.tiles.forEach(o=>{o.g.visible=true});
+  F.view({yaw:0,pitch:.5,zoom:1.05});F.tlook.set(0,.7,0);
+};
+P.yardTick=function(t){
+  const F=this,Y=F.yard,u=t-F.yardT,S=F.port?.62:1;
+  const cl=k=>Math.max(0,Math.min(1,k)),lerp=(a,b,k)=>a+(b-a)*cl(k),ease=k=>{k=cl(k);return k*k*(3-2*k)};
+  const put=(p,x,y,z,rx,rz)=>{p.t.position.set(x*S,y,z);p.t.rotation.set(rx||0,0,rz||0);p.lab.position.set(x*S,y+(rx?.95:1.3),z)};
+  // Darrin runs the ball, swerves off Glenn's dummy tackle, and goes straight into the wall
+  let dx,dz,dy=UP,drx=0,drz=0;
+  if(u<1.9){dx=lerp(-6,.4,u/1.9);dz=1.5;dy=UP+Math.abs(Math.sin(u*13))*.2;drz=-.2}
+  else if(u<Y_IMPACT){const k=ease((u-1.9)/(Y_IMPACT-1.9));dx=lerp(.4,2.6,k);dz=lerp(1.5,-3.42,k);dy=UP+Math.abs(Math.sin(u*16))*.16;drz=lerp(.35,-.15,k)}
+  else{const k=ease((u-Y_IMPACT)/.7);dx=2.6;dz=lerp(-3.42,-2.2,k);dy=lerp(UP,.38,k)+Math.sin(cl((u-Y_IMPACT)/.7)*Math.PI)*.55;drx=lerp(0,-Math.PI/2,k)}
+  put(Y.darrin,dx,dy,dz,drx,drz);
+  // Glenn closes in, lunges for the tackle, then pulls out: the fake
+  let gx,gz,grz=0,gy=UP;
+  if(u<1.7){const k=ease(u/1.7);gx=lerp(5.5,2.3,k);gz=lerp(-.6,1.1,k)}
+  else if(u<2.15){const k=(u-1.7)/.45;gx=lerp(2.3,1.5,k);gz=1.2;grz=lerp(0,.7,k)}
+  else if(u<2.75){const k=ease((u-2.15)/.6);gx=lerp(1.5,3.7,k);gz=lerp(1.2,2.5,k);grz=lerp(.7,-.15,k)}
+  else{gx=3.7;gz=2.5}
+  if(u>Y_IMPACT+.3)gy+=Math.abs(Math.sin(u*9))*.38;
+  put(Y.glenn,gx,gy,gz,0,grz);
+  // Evan waits in the middle of the yard, then cracks up
+  let ey=UP+Math.abs(Math.sin(u*3))*.06,erz=Math.sin(u*2)*.06;
+  if(u>Y_IMPACT+.2){ey=UP+Math.abs(Math.sin(u*10))*.42;erz=Math.sin(u*14)*.18}
+  put(Y.evan,-1.2,ey,-.6,0,erz);
+  // the ball: tucked under Darrin's arm, then loose
+  if(u<Y_IMPACT){Y.ball.position.set(dx*S+.6,dy+.1,dz+.25);Y.ball.rotation.set(0,0,.4)}
+  else{const k=cl((u-Y_IMPACT)/1.0),x0=2.9*S,x1=.9*S;
+    Y.ball.position.set(lerp(x0,x1,k),.25+Math.sin(k*Math.PI)*2.4+(k>=1?Math.abs(Math.sin((u-Y_IMPACT-1)*8))*.25*Math.max(0,1-(u-Y_IMPACT-1)):0),lerp(-3.3,-.8,k));
+    Y.ball.rotation.z=u*9}
+  // the impact
+  if(!Y.hit&&u>=Y_IMPACT){Y.hit=true;Y.hole.visible=true;Y.hole.position.set(2.6*S,1.25,.14);
+    F.burst(new T.Vector3(2.6*S,1.3,-3.8),0xf6f4ee);F.shake=.5;F.flashNow();F.sfx('discard');F.sfx('wrong');
+    F.stamp("THROUGH NAN'S<br>FIBRO WALL",'bad joke',2.2)}
+  const w=u-Y_IMPACT;Y.wall.position.x=(w>0&&w<.8)?Math.sin(w*70)*.09*(1-w/.8):0;
+  if(u>Y_END)F.yardEnd();
 };
 
 /* ---------- scenes ---------- */
