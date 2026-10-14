@@ -294,7 +294,7 @@ P.yardTick=function(t){
   else{gx=1.4;gz=3.4}
   if(u>Y_IMPACT+.3)gy+=Math.abs(Math.sin(u*9))*.38;
   if(!Y.s1&&u>=1.35){Y.s1=true;F.sfx('remove')}
-  if(!Y.s2&&u>=1.62){Y.s2=true;F.stamp('…FAKE!','sm warn',.9);F.sfx('place')}
+  if(!Y.s2&&u>=1.62){Y.s2=true;F.sfx('place')}
   put(Y.glenn,gx,gy,gz,0,grz,gry,gsy);
   // Evan waits in the middle of the yard, then cracks up
   let ey=UP+Math.abs(Math.sin(u*3))*.06,erz=Math.sin(u*2)*.06;
