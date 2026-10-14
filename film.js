@@ -265,7 +265,7 @@ P.buildYard=function(){
 };
 P.yardStart=function(t0){
   const F=this;if(!F.yard)F.buildYard();const Y=F.yard;
-  F.yardOn=true;F.yardT=t0==null?F.now:t0;Y.hit=false;Y.hole.visible=false;Y.group.visible=true;
+  F.yardOn=true;F.yardT=t0==null?F.now:t0;Y.hit=false;Y.s1=Y.s2=false;Y.hole.visible=false;Y.group.visible=true;
   F.tiles.forEach(o=>{o.g.visible=false});
   F.view({yaw:.28,pitch:.36,zoom:F.port?1.7:.95});F.tlook.set(0,1.2,-1.4);F.sfx('place');
 };
@@ -277,21 +277,25 @@ P.yardEnd=function(){
 P.yardTick=function(t){
   const F=this,Y=F.yard,u=t-F.yardT,S=F.port?.62:1;
   const cl=k=>Math.max(0,Math.min(1,k)),lerp=(a,b,k)=>a+(b-a)*cl(k),ease=k=>{k=cl(k);return k*k*(3-2*k)};
-  const put=(p,x,y,z,rx,rz)=>{p.t.position.set(x*S,y,z);p.t.rotation.set(rx||0,0,rz||0);p.lab.position.set(x*S,y+(rx?.95:1.3),z)};
+  const put=(p,x,y,z,rx,rz,ry,sy)=>{sy=sy||1;p.t.position.set(x*S,y*sy+(1-sy)*0,z);p.t.rotation.set(rx||0,ry||0,rz||0);p.t.scale.set(1/Math.sqrt(sy),sy,1);p.lab.position.set(x*S,y+(rx?.95:1.3*sy),z)};
   // Darrin runs the ball, swerves off Glenn's dummy tackle, and goes straight into the wall
   let dx,dz,dy=UP,drx=0,drz=0;
-  if(u<1.9){dx=lerp(-6,.4,u/1.9);dz=1.5;dy=UP+Math.abs(Math.sin(u*13))*.2;drz=-.2}
-  else if(u<Y_IMPACT){const k=ease((u-1.9)/(Y_IMPACT-1.9));dx=lerp(.4,2.6,k);dz=lerp(1.5,-3.42,k);dy=UP+Math.abs(Math.sin(u*16))*.16;drz=lerp(.35,-.15,k)}
+  if(u<1.5){dx=lerp(-6,-1.0,u/1.5);dz=1.5;dy=UP+Math.abs(Math.sin(u*13))*.2;drz=-.2}
+  else if(u<1.8){const k=ease((u-1.5)/.3);dx=lerp(-1.0,-.5,k);dz=lerp(1.5,.9,k);dy=UP+Math.sin(k*Math.PI)*.35;drz=lerp(-.2,.45,k)}   // flinches from the hit that never comes
+  else if(u<Y_IMPACT){const k=(u-1.8)/(Y_IMPACT-1.8),e=k*k;dx=lerp(-.5,2.6,e);dz=lerp(.9,-3.42,e);dy=UP+Math.abs(Math.sin(u*17))*.14;drz=Math.sin(u*11)*.22;drx=-.22}   // stumbles, can't stop
   else{const k=ease((u-Y_IMPACT)/.7);dx=2.6;dz=lerp(-3.42,-2.2,k);dy=lerp(UP,.38,k)+Math.sin(cl((u-Y_IMPACT)/.7)*Math.PI)*.55;drx=lerp(0,-Math.PI/2,k)}
   put(Y.darrin,dx,dy,dz,drx,drz);
   // Glenn closes in, lunges for the tackle, then pulls out: the fake
-  let gx,gz,grz=0,gy=UP;
-  if(u<1.7){const k=ease(u/1.7);gx=lerp(5.5,2.3,k);gz=lerp(-.6,1.1,k)}
-  else if(u<2.15){const k=(u-1.7)/.45;gx=lerp(2.3,1.5,k);gz=1.2;grz=lerp(0,.7,k)}
-  else if(u<2.75){const k=ease((u-2.15)/.6);gx=lerp(1.5,3.7,k);gz=lerp(1.2,2.5,k);grz=lerp(.7,-.15,k)}
-  else{gx=3.7;gz=2.5}
+  let gx,gz,grz=0,gy=UP,gry=0,gsy=1;
+  if(u<1.0){const k=ease(u/1.0);gx=lerp(5.5,1.4,k);gz=lerp(-.6,1.5,k);gy=UP+Math.abs(Math.sin(u*12))*.15}
+  else if(u<1.35){const k=ease((u-1.0)/.35);gx=1.4;gz=1.5;gsy=lerp(1,.74,k);grz=lerp(0,-.18,k)}                       // crouches, ready to hit
+  else if(u<1.6){const k=ease((u-1.35)/.25);gx=lerp(1.4,.45,k);gz=1.5;gsy=lerp(.74,1.12,k);grz=lerp(-.18,.55,k)}     // lunges in for the tackle
+  else if(u<1.95){const k=ease((u-1.6)/.35);gx=lerp(.45,1.4,k);gz=lerp(1.5,3.4,k);gy=UP+Math.sin(k*Math.PI)*.85;gry=k*Math.PI*2;grz=lerp(.55,0,k)}   // ...and gets out of the way: olé
+  else{gx=1.4;gz=3.4}
   if(u>Y_IMPACT+.3)gy+=Math.abs(Math.sin(u*9))*.38;
-  put(Y.glenn,gx,gy,gz,0,grz);
+  if(!Y.s1&&u>=1.35){Y.s1=true;F.sfx('remove')}
+  if(!Y.s2&&u>=1.62){Y.s2=true;F.stamp('…FAKE!','sm warn',.9);F.sfx('place')}
+  put(Y.glenn,gx,gy,gz,0,grz,gry,gsy);
   // Evan waits in the middle of the yard, then cracks up
   let ey=UP+Math.abs(Math.sin(u*3))*.06,erz=Math.sin(u*2)*.06;
   if(u>Y_IMPACT+.2){ey=UP+Math.abs(Math.sin(u*10))*.42;erz=Math.sin(u*14)*.18}
